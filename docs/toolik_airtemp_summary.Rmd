@@ -18,7 +18,8 @@ library(skimr)
 The data are stored in the `data-raw` subfolder. We'll use `here::here()` to point to it, and read it in using the `readr::read_csv()` function from the `readr` package (part of the `tidyverse`). 
 
 ```{r}
-toolik_weather <- read_csv(here::here("data", "data-raw", "toolik_weather.csv"))
+toolik_weather <- read_csv(here::here("data", "data-raw", "toolik_weather.csv"), na = '#N/A') %>% 
+  janitor::clean_names()
 ```
 
 
@@ -76,11 +77,23 @@ toolik_temp_plot <- ggplot(data = toolik_weather, aes(x = as.factor(month), y = 
 
 toolik_temp_plot
 ```
+```{r}
+my<- ggplot(data = toolik_weather, aes(x = (month), y = daily_air_temp_mean_c)) +
+  geom_jitter(aes(color = daily_air_temp_mean_c), show.legend = FALSE) +
+  scale_color_gradientn(colors = c('red', 'yellow', 'blue')) +
+  theme_minimal() +
+  labs(title = "Toolik Station daily air temperature",
+       x = "Month",
+       y = "Daily mean air temperatures (Celsius)")
+
+# ggsave(here::here('figs', 'toolkit_save_jpeg', height = 5, width = 6))
+
+```
 
 ## Export a figure
 
 ```{r}
-ggsave(here::here("figs", "toolik_temp_plot.png"), height = 6, width = 7)
+ggsave(here::here("figs", "toolik_temp_plot.jpg"), height = 6, width = 7)
 ```
 
 Now try changing something about the ggplot code, and re-run your `ggsave()` line above. Does your saved figure change? Great! 
