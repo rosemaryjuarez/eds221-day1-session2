@@ -86,7 +86,7 @@ my<- ggplot(data = toolik_weather, aes(x = (month), y = daily_air_temp_mean_c)) 
        x = "Month",
        y = "Daily mean air temperatures (Celsius)")
 
-# ggsave(here::here('figs', 'toolkit_save_jpeg', height = 5, width = 6))
+ggsave(here::here('figs', 'toolkit_save_jpg.jpg', height = 5, width = 6))
 
 ```
 
